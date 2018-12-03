@@ -260,15 +260,4 @@ public class Paillier
                 "mu:\t\t " + mu + "\n" +
                 '}';
     }
-
-//    public void printValues() {
-//        System.out.println("p:       " + p);
-//        System.out.println("q:       " + q);
-//        System.out.println("lambda:  " + lambda);
-//        System.out.println("n:       " + n);
-//        System.out.println("nsquare: " + nsquare);
-//        System.out.println("g:       " + g);
-//        System.out.println("mu:      " + mu);
-//    }
-
 }
