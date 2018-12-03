@@ -65,6 +65,9 @@ public class Paillier
         return mu;
     }
 
+    /***
+     * generate the key
+     */
     public void generateKeys()
     {
         p = new BigInteger(modLength / 2, CERTAINTY, new Random());     // a random prime
@@ -94,6 +97,12 @@ public class Paillier
         mu = g.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).modInverse(n);
     }
 
+    /***
+     * encrypt
+     * @param m
+     * @return
+     * @throws Exception
+     */
     public BigInteger encrypt(BigInteger m) throws Exception
     {
         // if m is not in Z_n
@@ -109,6 +118,13 @@ public class Paillier
         return (g.modPow(m, nsquare).multiply(r.modPow(n, nsquare))).mod(nsquare);
     }
 
+    /***
+     * encrypt
+     * @param m
+     * @param r
+     * @return
+     * @throws Exception
+     */
     public BigInteger encrypt(BigInteger m, BigInteger r) throws Exception
     {
         // if m is not in Z_n
@@ -127,6 +143,12 @@ public class Paillier
         return (g.modPow(m, nsquare).multiply(r.modPow(n, nsquare))).mod(nsquare);
     }
 
+    /***
+     * decrypt
+     * @param c
+     * @return
+     * @throws Exception
+     */
     public BigInteger decrypt(BigInteger c) throws Exception
     {
         // if c is not in Z*_{n^2}
@@ -139,18 +161,10 @@ public class Paillier
         return c.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).multiply(mu).mod(n);
     }
 
-    public void printValues()
-    {
-        System.out.println("p:       " + p);
-        System.out.println("q:       " + q);
-        System.out.println("lambda:  " + lambda);
-        System.out.println("n:       " + n);
-        System.out.println("nsquare: " + nsquare);
-        System.out.println("g:       " + g);
-        System.out.println("mu:      " + mu);
-    }
-
-    // return a random integer in Z_n
+    /***
+     * return a random integer in Z_n
+     * @return
+     */
     public BigInteger randomZN()
     {
         BigInteger r;
@@ -164,7 +178,10 @@ public class Paillier
         return r;
     }
 
-    // return a random integer in Z*_n
+    /***
+     * return a random integer in Z*_n
+     * @return
+     */
     public BigInteger randomZStarN()
     {
         BigInteger r;
@@ -178,7 +195,10 @@ public class Paillier
         return r;
     }
 
-    // return a random integer in Z*_{n^2}
+    /***
+     * return a random integer in Z*_{n^2}
+     * @return
+     */
     public BigInteger randomZStarNSquare()
     {
         BigInteger r;
@@ -192,7 +212,10 @@ public class Paillier
         return r;
     }
 
-    // return public key as the vector <n, g>
+    /***
+     * return public key as the vector <n, g>
+     * @return
+     */
     public Vector publicKey()
     {
         Vector pubKey = new Vector();
@@ -211,4 +234,41 @@ public class Paillier
     public BigInteger add(BigInteger c1, BigInteger c2){
         return c1.multiply(c2).mod(nsquare);
     }
+
+
+    /***
+     * 定数倍をする<br/>
+     * km ; kは定数, f(x)=(g^m)^k
+     *
+     * @param c
+     * @param k
+     * @return
+     */
+    public BigInteger multiplyConst(BigInteger c, BigInteger k){
+        return c.modPow(k, nsquare);
+    }
+
+    @Override
+    public String toString() {
+        return "Paillier{" + "\n\t" +
+                "p:\t\t " + p + "\n\t" +
+                "q:\t\t " + q + "\n\t" +
+                "lambda:\t " + lambda + "\n\t" +
+                "n:\t\t " + n + "\n\t" +
+                "nsquare: " + nsquare + "\n\t" +
+                "g:\t\t " + g + "\n\t" +
+                "mu:\t\t " + mu + "\n" +
+                '}';
+    }
+
+//    public void printValues() {
+//        System.out.println("p:       " + p);
+//        System.out.println("q:       " + q);
+//        System.out.println("lambda:  " + lambda);
+//        System.out.println("n:       " + n);
+//        System.out.println("nsquare: " + nsquare);
+//        System.out.println("g:       " + g);
+//        System.out.println("mu:      " + mu);
+//    }
+
 }
